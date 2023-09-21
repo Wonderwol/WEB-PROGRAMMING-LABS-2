@@ -1,10 +1,13 @@
 from flask import Flask, redirect, url_for
 app = Flask(__name__)
 
+
 @app.route("/")
 @app.route("/index")
 def start():
     return redirect("/menu", code=302)
+
+
 @app.route("/menu")
 def menu():
     return """
@@ -20,7 +23,7 @@ def menu():
 
         <ol>
             <li>
-                <a href="/lab1" target="_blank">Первая лабораторная работа</a> 
+                <a href="/lab1" target="_blank">Первая лабораторная работа</a>
             </li>
         </ol>
 
@@ -28,8 +31,10 @@ def menu():
             &copy; Темергалеев Никита, ФБИ-11, 3 курс, 2023
         </footer>
     </body>
-</html> 
-""" 
+</html>
+"""
+
+
 @app.route("/lab1")
 def lab1():
     return """
@@ -54,8 +59,10 @@ def lab1():
             &copy; Темергалеев Никита, ФБИ-11, 3 курс, 2023
         </footer>
     </body>
-</html> 
+</html>
 """
+
+
 @app.route('/lab1/oak')
 def oak():
     return '''
@@ -68,5 +75,3 @@ def oak():
     </body>
 </html>
 '''
-
-
