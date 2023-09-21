@@ -1,0 +1,13 @@
+img {
+    width: 78%;
+    height: auto;
+    position: relative;
+    display: inline-block;
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-size: 2vw;
+    text-align: center;
+}
