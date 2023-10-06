@@ -31,23 +31,9 @@ h2 {
     text-align: center;
 }
 
-a {
-    position: relative;
-    display: inherit;
-    text-align: center;
-}
-
-
-li a {
-    position: relative;
-    display: inherit;
-    text-align: center;
-    right: 26px;
-}
 
 ul {
     text-align: left;
-    list-style-type: none;
 }
 
 footer {
@@ -57,4 +43,20 @@ footer {
     margin: -8px;
     padding-right: 2%;
 }
+
+.films_img {
+    width: 42%;
+    height: auto;
+    margin-left: 5vw;
+    position: relative;
+}
+
+.description {
+    width: 45%;
+    display: inline-block;
+    left: 50%;
+    position: absolute;
+    top: 19vw;
+}
+
 
