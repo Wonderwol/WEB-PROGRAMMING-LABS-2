@@ -40,7 +40,7 @@ def menu():
 def lab1():
     return '''
 <!doctype html>
-<link rel="stylesheet" href="''' + url_for('static', filename='lab1x.css') + '''">
+<link rel="stylesheet" href="''' + url_for('static', filename='main.css') + '''">
 <html>
     <head>
         <title>Темергалеев Никита Алексеевич, лабораторная 1</title>
