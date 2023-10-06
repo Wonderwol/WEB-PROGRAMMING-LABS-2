@@ -59,4 +59,22 @@ footer {
     top: 19vw;
 }
 
+.menu_bt {
+    position: absolute;
+    left: 3vw;
+    color: white;
+    text-decoration: none;
+    border: 5px white solid;
+    width: 10vw;
+    text-align: center;
+    margin-top: -4.5px;
+    transition:1s 0.3s;
+}
+
+.menu_bt:hover {
+    color: black;
+    background-color: white;
+    transition:1s 0.3s;
+}
+
 
