@@ -141,8 +141,15 @@ def berserk():
 
 @app.route('/lab2/example')
 def example():
-    name = 'Темергалеев Никита'
-    lab_num = 2
-    course_num = '3 курс'
-    group = 'ФБИ-11'
-    return render_template('example.html', name=name, lab_num=lab_num, course_num=course_num, group=group)  
+    name, lab_num, course_num, group = 'Темергалеев Никита', 2, '3 курс', 'ФБИ-11'
+    fruits = [
+        {'name': 'яблоки', 'price': 100},
+        {'name': 'груши', 'price': 120},
+        {'name': 'апельсины', 'price': 80},
+        {'name': 'мандарины', 'price': 95},
+        {'name': 'манго', 'price': 321}
+    ]
+    return render_template('example.html', name=name,
+                            lab_num=lab_num,
+                            course_num=course_num,
+                            group=group, fruits=fruits)
