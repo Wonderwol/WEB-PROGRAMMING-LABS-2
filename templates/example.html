@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Темергалеев Никита Алексеевич. Лабораторная работа {{lab_num}}</title>
+    <title>{% if name %} {{name}} {% else %} Анонимус {% endif %}. Лабораторная работа {{lab_num}}</title>
     <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
 </head>
 <body>
     <header>
-        WEB-программирование, часть 2. Лабораторная работа {{lab_num}}
+        WEB-программирование, часть 2. {% if lab_num %}Лабораторная работа 2{% endif %}
     </header>
 
     <main>
@@ -20,7 +20,25 @@
     </main>
 
     <footer>
-        &copy; {{ name }}, {{group}}, {{course_num}} курс, 2023
+        &copy;
+        {% if name %}   
+            {{ name }},
+        {% else %}
+            Анонимус,
+        {% endif %}
+
+        {% if group %}
+            {{ group }},
+        {% else %}
+            РЫЦАРИ ТАЛЧА,
+        {% endif %}
+
+        {% if course_num %}
+            {{ course_num }},
+        {% else %}
+            РЭП
+        {%  endif %}
+        2023
     </footer>
 </body>
 </html>

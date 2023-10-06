@@ -143,6 +143,6 @@ def berserk():
 def example():
     name = 'Темергалеев Никита'
     lab_num = 2
-    course_num = 3
+    course_num = '3 курс'
     group = 'ФБИ-11'
-    return render_template('example.html', name=name, lab_num = lab_num, course_num = course_num, group = group)
+    return render_template('example.html', name=name, lab_num=lab_num, course_num=course_num, group=group)  
