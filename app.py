@@ -149,7 +149,6 @@ def example():
         {'name': 'мандарины', 'price': 95},
         {'name': 'манго', 'price': 321}
     ]
-
     books = [
         {'name': 'Собор Парижской Богоматери', 'author': 'Виктор Гюго', 'pages': 544, 'genre': 'роман'},
         {'name': 'Дневник Анны Франк', 'author': 'Анна Франк', 'pages': 296, 'genre': 'автобиография'},
@@ -167,3 +166,7 @@ def example():
                             course_num=course_num,
                             group=group, fruits=fruits,
                             books=books)
+
+@app.route('/lab2/')
+def lab2():
+    return render_template('lab2.html')
