@@ -142,6 +142,7 @@ def berserk():
 </html>
 '''
 
+
 @app.route('/lab2/example')
 def example():
     name, lab_num, course_num, group = 'Темергалеев Никита', 2, '3 курс', 'ФБИ-11'
@@ -165,14 +166,16 @@ def example():
         {'name': 'Робинзон Крузо', 'author': 'Даниель Дефо', 'pages': 230, 'genre': 'роман'}
     ]
     return render_template('example.html', name=name,
-                            lab_num=lab_num,
-                            course_num=course_num,
-                            group=group, fruits=fruits,
-                            books=books)
+                           lab_num=lab_num,
+                           course_num=course_num,
+                           group=group, fruits=fruits,
+                           books=books)
+
 
 @app.route('/lab2/')
 def lab2():
     return render_template('lab2.html')
+
 
 @app.route('/lab2/films')
 def films():
