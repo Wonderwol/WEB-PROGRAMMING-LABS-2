@@ -4,7 +4,7 @@
 
 {% block main %}
 
-    {% if user %}
+    {% if user and age %}
 
     <h1>Привет, {{ user }}!</h1>
     <h2>Добро пожаловать на наш сайт!</h2>
@@ -30,7 +30,7 @@
         
         <label>Ваш возраст:</label>
         <div>
-            <input type="number" name="age" value="{{ age or '' }}">
+            <input type="number" name="age" value="{{ age or '' }}" min="7" max="120">
             <span class='error'>{{ errors.age }}</span> 
         </div>
 

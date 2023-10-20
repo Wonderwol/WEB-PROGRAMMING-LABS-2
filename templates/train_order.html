@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{% block main %}
+
+    {% if surname and name and patronymic and ticket_type and place_type and baggage and age and start and finish and date %}
+
+    <h1>Покупка билета</h1>
+
+    <form action="/lab3/train_success" style="text-align: center;">
+        <h3>Заполните бланк:</h3>
+        <label>ФИО</label>
+        <br>
+        <label>
+            Фамилия:<input type="text" name="surname" checked>
+        </label>
+        <br>
+        <br>
+        <label>
+            Имя:<input type="text" name="name" checked>
+        </label>
+        <br>
+        <br>
+        <label>
+            Отчество:<input type="text" name="patronymic" checked>
+        </label>
+        <br>
+        <br>
+        <label>Тип билета:</label>
+        <select name="ticket_type">
+            <option value="детский" {{ ticket_type == 'детский' and 'selected' }}>детский</option>
+            <option value="взрослый" {{ ticket_type == 'взрослый' and 'selected' }}>взрослый</option>
+        </select>
+        <br>
+        <br>
+        <label>Тип полки:</label>
+        <select name="place_type">
+            <option value="нижняя" {{ place_type == 'нижняя' and 'selected' }}>нижняя</option>
+            <option value="верхняя" {{ place_type == 'верхняя' and 'selected' }}>верхняя</option>
+            <option value="верхняя боковая" {{ place_type == 'верхняя боковая' and 'selected' }}>верхняя боковая</option>
+            <option value="нижняя боковая" {{ place_type == 'нижняя боковая' and 'selected' }}>нижняя боковая</option>
+        </select>
+        <br>
+        <br>
+        <label>Имеется багаж?</label>
+        <br>
+        <select name="baggage">
+            <option value="имеется" {{ baggage == 'имеется' and 'selected' }}>Да</option>
+            <option value="отсутствует" {{ baggage == 'отсутствует' and 'selected' }}>Нет</option>
+        </select>
+        <br>
+        <br>
+        <label>Ваш возраст:</label>
+        <div>
+            <input type="number" name="age" value="{{ age or '' }}" min="18" max="120">
+            <span class='error'>{{ errors.age }}</span> 
+        </div>
+        <br>
+        <br>
+        <label>Пункт выезда:</label>
+        <select name="start">
+            <option value="город А" {{ start == 'город А' and 'selected' }}>пункт А</option>
+            <option value="город Б" {{ start == 'город Б' and 'selected' }}>пункт Б</option>
+            <option value="город В" {{ start == 'город В' and 'selected' }}>пункт В</option>
+            <option value="Город Г" {{ start == 'город Д' and 'selected' }}>пункт Г</option>
+        </select>
+        <br>
+        <br>
+        <label>Пункт назначения:</label>
+        <select name="finish">
+            <option value="город Д" {{ finish == 'город Д' and 'selected' }}>пункт Д</option>
+            <option value="город Е" {{ finish == 'город Е' and 'selected' }}>пункт Е</option>
+            <option value="город Ё" {{ finish == 'город Ё' and 'selected' }}>пункт Ё</option>
+            <option value="город Ж" {{ finish == 'город Ж' and 'selected' }}>пункт Ж</option>
+        </select>
+        <br>
+        <br>
+        <label>Дата поездки:</label>
+        <select name="date">
+            <option value="22.10.23" {{ date == '22.10.23' and 'selected' }}>22.10.23</option>
+            <option value="23.10.23" {{ date == '23.10.23' and 'selected' }}>23.10.23</option>
+            <option value="24.10.23" {{ date == '24.10.23' and 'selected' }}>24.10.23</option>
+            <option value="25.10.23" {{ date == '25.10.23' and 'selected' }}>25.10.23</option>
+        </select>
+        <br>
+        <br>
+        <div>
+            <button type="submit">Отправить</button> 
+        </div>
+        <br>
+        <br>
+    </form>
+    {% endif %}
+    {% endblock %}

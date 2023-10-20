@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{% block main %}
+
+
+    <br>
+    <div>
+        Пассажир: <span style="color:green">{{ surname }} {{ name }} {{ patronymic }}</span>
+    </div>
+    <br>
+    <br>
+    <div>
+        Билет: <span style="color:green">{{ ticket_type }}</span>
+    </div>
+    <br>
+    <br>
+    <div>
+        Полка: <span style="color:green">{{ place_type }}</span>
+    </div>
+    <br>
+    <br>
+    <div>
+        Багаж <span style="color:green">{{ baggage }}</span>
+    </div>
+    <br>
+    <br>
+    <div>
+        Возраст: <span style="color:green">{{ age }}</span>
+    </div>
+    <br>
+    <br>
+    <div>
+    Пункт отправления: <span style="color:green">{{ start }}</span>
+    </div>
+    <br>
+    <br>
+    <div>
+        Пункт назначения: <span style="color:green">{{ finish }}</span>
+    </div>
+    <br>
+    <br>
+    <div>
+        Дата поездки: <span style="color:green">{{ date }}</span>
+    </div>
+    <br>
+    <br>
+    <a href="/lab3/train_order" style="left: 42vw; position: relative;color: darkgreen; font-size: 3vw; text-decoration: none;">Купить билет</a>
+    <br>
+    <br>
+{% endblock %}
