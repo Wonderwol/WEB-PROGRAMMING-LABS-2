@@ -4,27 +4,34 @@
 
 {% block main %}
 
-    {% if surname and name and patronymic and ticket_type and place_type and baggage and age and start and finish and date %}
-
     <h1>Покупка билета</h1>
 
-    <form action="/lab3/train_success" style="text-align: center;">
+    <form style="text-align: center;">
         <h3>Заполните бланк:</h3>
         <label>ФИО</label>
         <br>
+        <div>
         <label>
-            Фамилия:<input type="text" name="surname" checked>
+            Фамилия:<input type="text" name="surname" value="{{ surname or '' }}">
         </label>
+        <span class='error'>{{ errors.surname }}</span> 
+        </div>
         <br>
         <br>
+        <div>
         <label>
-            Имя:<input type="text" name="name" checked>
+            Имя:<input type="text" name="name" value="{{ name or '' }}">
         </label>
+        <span class='error'>{{ errors.name }}</span> 
+        </div>
         <br>
         <br>
-        <label>
-            Отчество:<input type="text" name="patronymic" checked>
-        </label>
+        <div>
+            <label>
+                Отчество:<input type="text" name="patronymic" value="{{ patronymic or '' }}">
+            </label>
+            <span class='error'>{{ errors.patronymic }}</span> 
+        </div>
         <br>
         <br>
         <label>Тип билета:</label>
@@ -77,12 +84,10 @@
         <br>
         <br>
         <label>Дата поездки:</label>
-        <select name="date">
-            <option value="22.10.23" {{ date == '22.10.23' and 'selected' }}>22.10.23</option>
-            <option value="23.10.23" {{ date == '23.10.23' and 'selected' }}>23.10.23</option>
-            <option value="24.10.23" {{ date == '24.10.23' and 'selected' }}>24.10.23</option>
-            <option value="25.10.23" {{ date == '25.10.23' and 'selected' }}>25.10.23</option>
-        </select>
+        <div>
+        <input type="date" name="date" value="{{ date or '' }}">
+        <span class='error'>{{ errors.date }}</span> 
+        </div>
         <br>
         <br>
         <div>
@@ -91,5 +96,4 @@
         <br>
         <br>
     </form>
-    {% endif %}
     {% endblock %}

@@ -57,7 +57,33 @@ def success():
 @lab3.route('/lab3/train_order')
 def train_order():
     errors = {}
-    return render_template('train_order.html', errors=errors)
+    surname = request.args.get('surname')
+    if surname == '':
+        errors['surname'] = 'Заполните поле!'
+    name = request.args.get('name')
+    if name == '':
+        errors['name'] = 'Заполните поле!'
+    patronymic = request.args.get('patronymic')
+    if patronymic == '':
+        errors['patronymic'] = 'Заполните поле!'
+    ticket_type = request.args.get('ticket_type')
+    place_type = request.args.get('place_type')
+    baggage = request.args.get('baggage')
+    age = request.args.get('age')
+    if age == '':
+        errors['age'] = 'Заполните поле!'
+    start = request.args.get('start')
+    finish = request.args.get('finish')
+    date = request.args.get('date')
+    if date == '':
+        errors['date'] = 'Заполните поле!'
+    if surname and name and patronymic and age and date:
+        return train_success()
+    return render_template('train_order.html', errors=errors, surname=surname,
+                           name=name, patronymic=patronymic,
+                           ticket_type=ticket_type, place_type=place_type,
+                           baggage=baggage, age=age, start=start,
+                           finish=finish, date=date)
 
 
 @lab3.route('/lab3/train_success')
