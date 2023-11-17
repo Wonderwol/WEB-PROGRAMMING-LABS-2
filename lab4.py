@@ -41,10 +41,42 @@ def fridge():
     temp = request.form.get('temp')
     if temp:
         temp = int(temp)
-    if temp == '':
-        errors['temp'] = 'не введена температура'
-    if temp > -1:
-        errors['temp'] = 'не удалось установить температуру - слишком высокое значение'
-    if -12 < temp < -9:
-        errors['temp'] = 'Установлена'
     return render_template("fridge.html", temp=temp, errors=errors)
+
+
+@lab4.route('/lab4/grain_order', methods=['GET', 'POST'])
+def grain():
+    errors = {}
+    if request.method == 'GET':
+        return render_template("grain_order.html", errors=errors)
+    total = 0
+    selected_option = request.form.get('grain')
+    zerno = ''
+    weight = request.form.get('weight')
+    if weight:
+        weight = int(weight)
+        if weight > 500:
+            errors['weight3'] = 'Такого объема сейчас нет в наличии'
+    if weight == '':
+        errors['weight1'] = 'не введен вес'
+    if weight <= 0:
+        errors['weight2'] = 'неверное значение веса'
+    if selected_option == 'ya':
+        total += 12500
+        zerno = 'ячмень'
+    if selected_option == 'ov':
+        total += 8500
+        zerno = 'овёс'
+    if selected_option == 'psh':
+        total += 8700
+        zerno = 'пшеница'
+    if selected_option == 'ro':
+        total += 14000
+        zerno = 'рожь'
+    total = total * weight
+    if weight:
+        if weight > 50:
+            total = total - total * 0.1
+    return render_template("grain_order.html", errors=errors,
+                           selected_option=selected_option, weight=weight,
+                           zerno=zerno, total=total)
