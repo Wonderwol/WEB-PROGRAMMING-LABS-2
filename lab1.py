@@ -24,16 +24,16 @@ def menu():
 
         <ol>
             <li>
-                <a href="/lab1" target="_blank">Первая лабораторная работа</a>
+                <a href="/lab1" target="_self">Первая лабораторная работа</a>
             </li>
             <li>
-                <a href="/lab2" target="_blank">Вторая лабораторная работа</a>
+                <a href="/lab2" target="_self">Вторая лабораторная работа</a>
             </li>
             <li>
-                <a href="/lab3" target="_blank">Третья лабораторная работа</a>
+                <a href="/lab3" target="_self">Третья лабораторная работа</a>
             </li>
             <li>
-                <a href="/lab4" target="_blank">Четвертая лабораторная работа</a>
+                <a href="/lab4" target="_self">Четвертая лабораторная работа</a>
             </li>
         </ol>
 

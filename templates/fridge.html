@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 2{% endblock %}
+
+{% block main %}
+{% if temp %}
+    {% if temp < -12 %}
+        <h1>Не удалось установить температуру - слишком низкое значение</h1>
+        <button style="left: 48%; position: absolute;"><a style="text-decoration: none; color: black;" href="/lab4/fridge">Назад</a></button>
+        <br>
+        <br>
+    {% endif %}
+    {% if temp > -1 %}
+        <h1>Не удалось установить температуру - слишком высокое значение</h1>
+        <button style="left: 48%; position: absolute;"><a style="text-decoration: none; color: black;" href="/lab4/fridge">Назад</a></button>
+        <br>
+        <br>
+    {% endif %}
+    {% if -12 <= temp <= -9 %}
+        <h1>Установлена температура: {{ temp }}&#8451; ❄❄❄</h1>
+        <button style="left: 48%; position: absolute;"><a style="text-decoration: none; color: black;" href="/lab4/fridge">Назад</a></button>
+        <br>
+        <br>
+    {% endif %}
+    {% if -8 <= temp <= -5 %}
+        <h1>Установлена температура: {{ temp }}&#8451; ❄❄</h1>
+        <button style="left: 48%; position: absolute;"><a style="text-decoration: none; color: black;" href="/lab4/fridge">Назад</a></button>
+        <br>
+        <br>
+    {% endif %}
+    {% if -4 <= temp <= -1 %}
+        <h1>Установлена температура: {{ temp }}&#8451; ❄</h1>
+        <button style="left: 48%; position: absolute;"><a style="text-decoration: none; color: black;" href="/lab4/fridge">Назад</a></button>
+        <br>
+        <br>
+    {% endif %}
+{% else %}
+    <h1>Холодильник</h1>
+    <form method="post">
+        <div>
+            <label for="temp">Температура холодильника:</label>
+            <input type="number" id="temp" name="temp" value="{{ temp or '' }}">
+            <span class='error'>{{ errors.temp }}</span> 
+        </div>
+        <button type="submit">Установить температуру</button>    
+        <button type="reset">Отмена</button>
+    </form>
+    <br>
+    <br>
+{% endif %}
+{% endblock %}

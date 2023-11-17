@@ -4,11 +4,11 @@
 {% block main %}
     <h1>Вход</h1>
     <h2>Пожалуйста, авторизуйтесь</h2>
-    <h3 style="text-align: center; color: red">{{ error }}</h3>
+    <h3 style="text-align: center; color: red">{{ errors.h }}</h3>
     <form method="post">
         <div>
             <label for="username">Пользователь:</label>
-            <input type="text" id="username" name="username" value="{{ username }}"></input>
+            <input type="text" id="username" name="username" value="{{ username }}">
             <span class='error'>{{ errors.username }}</span> 
         </div>
         <div>
