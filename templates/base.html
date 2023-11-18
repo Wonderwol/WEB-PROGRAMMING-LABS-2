@@ -12,6 +12,22 @@
         }
     </style>
     {% endif %}
+
+    {% if request.cookies.get('font-size') %}
+    <style>
+        body {
+            font-size: {{ request.cookies.get('font-size')}};
+        }
+    </style>
+    {% endif %}
+
+    {% if request.cookies.get('background-color') %}
+    <style>
+        body {
+            background-color: {{ request.cookies.get('background-color')}};
+        }
+    </style>
+    {% endif %}
 </head>
 <body>
     <header>

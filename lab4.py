@@ -86,10 +86,11 @@ def grain():
 def cookies():
     if request.method == 'GET':
         return render_template('cookies.html')
-    
     color = request.form.get('color')
+    font = request.form.get('font-size')
+    back = request.form.get('background-color')
     headers = {
-        'Set-Cookie': 'color=' + color + '; path=/',
+        'Set-Cookie': 'color=' + color + '; font-size=' + font + '; background-color=' + back + '; path=/',
         'Location': '/lab4/cookies'
     }
     return '', 303, headers
