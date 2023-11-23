@@ -16,30 +16,29 @@
             <br> 
         </form>
 
+        <form method="post">
+            <br>
+            <label for="background-color">Выберите цвет фона:</label>
+            <input type="color" id="background-color" name="background-color">
+            <br>
+            <div>
+                <button type="submit" style="left: 48%; position: absolute"">OK</button>
+            </div>
+            <span class='error'>{{ errors.fb_color }}</span>
+            <br>
+            <br> 
+        </form>
 
-    <form method="post">
+        <form method="post">
+            <br>
+            <label for="font-size">Выберите размер шрифта:</label>
+            <input type="number" id="font-size" name="font-size" min="5" max="30">
+            <span class="error">{{ errors.font }}</span>
+            <br>
+            <div>
+                <button type="submit" style="left: 48%; position: absolute"">OK</button>
+            </div>
+        </form>
         <br>
-        <label for="background-color">Выберите цвет фона:</label>
-        <input type="color" id="background-color" name="background-color">
         <br>
-        <div>
-            <button type="submit" style="left: 48%; position: absolute"">OK</button>
-        </div>
-        <span class='error'>{{ errors.fb_color }}</span>
-        <br>
-        <br> 
-    </form>
-
-    <form method="post">
-        <br>
-        <label for="font-size">Выберите размер шрифта:</label>
-        <input type="number" id="font-size" name="font-size" min="5" max="30">
-        <span class="error">{{ errors.font }}</span>
-        <br>
-        <div>
-            <button type="submit" style="left: 48%; position: absolute"">OK</button>
-        </div>
-    </form>
-    <br>
-    <br>
 {% endblock %}

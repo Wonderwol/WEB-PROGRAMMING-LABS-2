@@ -10,7 +10,7 @@ def lab():
 @lab4.route('/lab4/login', methods=['GET', 'POST'])
 def login():
     errors = {}
-    error = ''
+
     if request.method == 'GET':
         return render_template("login.html", errors=errors)
 
@@ -29,7 +29,7 @@ def login():
     elif username != '' and password != '':
         errors['h'] = 'Неверный логин и/или пароль'
 
-    return render_template('login.html', error=error, username=username,
+    return render_template('login.html', username=username,
                            password=password, errors=errors)
 
 
