@@ -5,29 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block lab %}{% endblock %}</title>
     <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
-    {% if request.cookies.get('color') %}
     <style>
         body {
-            color: {{ request.cookies.get('color')}};
-        }
-    </style>
-    {% endif %}
+            {% if request.cookies.get('color') %}
+            color: {{ request.cookies.get('color') }};
+            {% endif %}
 
-    {% if request.cookies.get('font-size') %}
-    <style>
-        body {
-            font-size: {{ request.cookies.get('font-size')}};
-        }
-    </style>
-    {% endif %}
+            {% if request.cookies.get('background-color') %}
+            background-color: {{ request.cookies.get('background-color') }};
+            {% endif %}
 
-    {% if request.cookies.get('background-color') %}
-    <style>
-        body {
-            background-color: {{ request.cookies.get('background-color')}};
+            {% if request.cookies.get('font-size') %}
+            font-size: {{ request.cookies.get('font-size') }};
+            {% endif %}
         }
     </style>
-    {% endif %}
 </head>
 <body>
     <header>

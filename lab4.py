@@ -84,13 +84,37 @@ def grain():
 
 @lab4.route('/lab4/cookies', methods=['GET', 'POST'])
 def cookies():
+    errors = {}
     if request.method == 'GET':
-        return render_template('cookies.html')
+        return render_template('cookies.html', errors=errors)
+
     color = request.form.get('color')
-    font = request.form.get('font-size')
     back = request.form.get('background-color')
-    headers = {
-        'Set-Cookie': 'color=' + color + '; font-size=' + font + '; background-color=' + back + '; path=/',
-        'Location': '/lab4/cookies'
-    }
+    font = request.form.get('font-size')
+
+    if color and color != back:
+        headers = {
+            'Set-Cookie': 'color=' + color + '; path=/',
+            'Location': '/lab4/cookies'
+        }
+
+    if back and back != color:
+        headers = {
+            'Set-Cookie': 'background-color=' + back + '; path=/',
+            'Location': '/lab4/cookies'
+        }
+
+    if font == '':
+        errors['font'] = 'Введите размер шрифта'
+        return render_template('cookies.html', errors=errors)
+
+    elif font:
+        headers = {
+            'Set-Cookie': 'font-size=' + font + 'px; path=/',
+            'Location': '/lab4/cookies'
+        }
+
     return '', 303, headers
+
+    # Реализация проверки на сходство цветов фона и текста - невозможна
+    # из-за способа передачи кук через изменяющийся словарь
