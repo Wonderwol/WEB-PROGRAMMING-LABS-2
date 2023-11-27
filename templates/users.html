@@ -5,8 +5,10 @@
 {% block main %}
 <h1>Пользователи:</h1>
     <ul>
-    {% for i in range(5) %}
-        <li>{{ cur_user }}</li>
-    {% endfor %}
+        {% for i in range(len_res) %}
+        <li>{{ result[i][1] }}</li>
+        {% endfor %}
     </ul>
+    <br>
+    <br>
 {% endblock %}

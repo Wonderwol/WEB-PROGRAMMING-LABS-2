@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, session
 import psycopg2
 
 
@@ -34,7 +34,7 @@ def main():
 
     connections = (conn1, conn2, conn3, conn4)
 
-    for i in range(0, 4):
+    for i in range(len(connections)):
         # Получаем курсор. С помощью него мы можем выполнять SQL-запросы
         cur = connections[i].cursor()
 
@@ -46,16 +46,18 @@ def main():
         # Сохраняем эти строки в переменную result
         result = cur.fetchall()
 
+        # Используем session, чтобы передать значение result в users()
+        session['result'] = result
+
         # Закрываем соединение с БД
         cur.close()
         connections[i].close()
-
-    print(result)
 
     return "go to console"
 
 
 @lab5.route('/lab5/users')
 def users():
-    cur_user = request.args.get('results')
-    return render_template('users.html', cur_user=cur_user)
+    result = session.get('result', [])
+    len_res = len(result)
+    return render_template('users.html', result=result, len_res=len_res)
