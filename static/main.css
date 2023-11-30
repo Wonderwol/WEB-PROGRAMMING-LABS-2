@@ -64,11 +64,12 @@ footer {
     left: 3vw;
     color: white;
     text-decoration: none;
-    border: 5px white solid;
+    border-left: 5px white solid;
+    border-right: 5px white solid;
     width: 10vw;
     text-align: center;
-    margin-top: -4.5px;
-    transition:1s 0.3s;
+    margin-top: 0.5px;
+    transition: 1s 0.3s;
 }
 
 .menu_bt:hover {
@@ -84,4 +85,47 @@ footer {
     left:2vw;
 }
 
+button {
+    cursor: pointer;
+}
+
+.body_register {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+
+
+.form_register {
+    text-align: center;
+    border: 8px white solid;
+    left: 27vw;
+    border-radius: 20px;
+    position: relative;
+    width: 42vw;
+    height: 36vw;
+}
+
+.div_register {
+    margin-bottom: 10px;
+    position: relative;
+    left: -118px;
+}
+
+.button_register {
+    border: 7px white solid;
+    background-color: white;
+    font-size: 1.3vw;
+    border-radius: 20px;
+    width: 18vw;
+}
+
+.input_register::placeholder {
+    transform: translateY(-9px);
+    color: blueviolet;
+    font-size: 1.3vw;
+}
 
