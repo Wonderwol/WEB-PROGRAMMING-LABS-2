@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>База знаний</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+    <style>
+        a {
+            position: relative;
+            margin: 0vw 2.5vw 0vw 2.5vw;
+            text-decoration: none;
+            color:blueviolet
+        }
+
+        button {
+            border: 3px solid blueviolet;
+            border-radius: 15px;
+            background-color: black;
+            color: blueviolet;
+        }
+
+        .name_art {
+            top: -20vw;
+            position: relative;
+            width: 20vw;
+            left: 37vw;
+            height: 3vw;
+        }
+
+        .text_article {
+            position: relative;
+            top: 8vw;
+            width: 45vw;
+            left: 5vw;
+        }
+
+        .bt_art {
+            position: relative;
+            top: 14vw;
+            left: -22vw;
+        }
+
+    </style>
+</head>
+<body>
+    <header style="height: 4vw; font-size: 3vw; text-align: left;">
+        Новая заметка
+    </header>
+
+<main>
+    <div>
+    <span class="error">{{ error }}</span>
+    <form method="POST">
+        <input class="name_art" name="title_article" type="text" placeholder="Название статьи">
+        <textarea class="text_article" name="text_article" placeholder="Текст статьи" rows="20"></textarea>
+        <input class="bt_art" type="submit" value="Apply"/>
+    </form>
+    <br>
+    </div>
+    
+</main>
+<br>
+<footer style="position: relative; top: 12vw;">
+    <a style="top: 0.1vw;" class="menu_bt" href="/menu" target="_self">Меню</a> База знаний 
+</footer>
+
+</body>
+</html>

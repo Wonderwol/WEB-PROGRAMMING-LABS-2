@@ -36,13 +36,7 @@ def main():
     global global_result
     global_result = result
 
-    username = session.get('username', 'Anon')
-    dbClose(cur, conn)
-    if not username:
-        visibleUser = 'Anon'
-    else:
-        visibleUser = username
-
+    visibleUser = session.get('username', 'Anon')
 
     return render_template('lab5.html', username=visibleUser, result=result)
 
@@ -75,7 +69,7 @@ def registerPage():
     conn = dbConnect()
     cur = conn.cursor()
 
-    cur.execute(f"SELECT username FROM users WHERE username = '{ username }';")
+    cur.execute("SELECT username FROM users WHERE username = '%s';" % (username))
 
     resultСur = cur.fetchone()
 
@@ -86,7 +80,10 @@ def registerPage():
 
         return render_template('register.html', errors=errors, resultСur=resultСur)
 
-    cur.execute(f"INSERT INTO users (username, password) VALUES ('{username}', '{hashPassword}');")
+    cur.execute(f"CREATE USER {username} WITH PASSWORD '{hashPassword}';") # Не удается убрать инъекцию
+    cur.execute("GRANT USAGE, SELECT ON SEQUENCE articles_id_seq TO %s;" % (username))
+    cur.execute("GRANT ALL PRIVILEGES ON TABLE articles TO %s;" % (username,))
+    cur.execute("INSERT INTO users (username, password) VALUES (%s, %s);", (username, hashPassword))
 
     conn.commit()
     dbClose(cur, conn)
@@ -101,37 +98,20 @@ def loginPage():
     if request.method == 'GET':
         return render_template("login.html", errors=errors)
 
-    # Если мы попали сюда, значит это метод POST,
-    # так как GET мы уже обработали и сделали return.
-    # После return функция немедленно завершается
     username = request.form.get("username")
     password = request.form.get("password")
 
-    # Проверяем username и password на пустоту
-    # Если любой из них пустой, то добавляем ошибку
-    # и рендерим шаблом
     if not (username or password):
         errors.append("Пожалуйста, заполните все поля")
         return render_template("login.html", errors=errors)
 
-    # Если мы попали сюда, значит username и password заполнены
-    # Подключаемся к БД
     conn = dbConnect()
     cur = conn.cursor()
 
-    # Проверяем наличие клиента в базе данных
-    # У нас может быть 2 пользователя с одинаковыми логинами
-
-    # WARNING: мы используем f-строки, что не рекомендуется делать
-    # позже мы разберемся с Вами почему не стоит так делать
-    cur.execute(f"SELECT id, password FROM users WHERE username = '{ username }'")
+    cur.execute("SELECT id, password FROM users WHERE username = %s", (username,))
 
     result = cur.fetchone()
 
-    # fetchone, в отличие от fetchall, получает только одну строку
-    # мы задали свойство UNIQUE для пользователя, значит
-    # больше одной строки мы не можем получить
-    # Только один пользователь с таким именем может быть в БД
     if result is None:
         errors.append('Неправильный пользователь или пароль')
         dbClose(cur, conn)
@@ -139,15 +119,8 @@ def loginPage():
 
     userID, hashPassword = result
 
-    # С помощью check_password_hash сравниваем хэш и
-    # пароль из базы данных. Функция "check_password_hash"
-    # сама передает password в хэш
-
     if check_password_hash(hashPassword, password):
-        # Пароль правильный
 
-        # Сохраняем id и username
-        # в сессию (JWL токен)
         session['id'] = userID
         session['username'] = username
         dbClose(cur, conn)
@@ -156,3 +129,58 @@ def loginPage():
     else:
         errors.append("Неправильный логин или пароль")
         return render_template("login.html", errors=errors)
+
+
+@lab5.route("/lab5/new_article", methods=["GET", "POST"])
+def createArticle():
+    errors = []
+
+    userID = session.get("id")
+
+    if userID is not None:
+        if request.method == "GET":
+            return render_template("new_article.html")
+
+        if request.method == "POST":
+            text_article = request.form.get("text_article")
+            title = request.form.get("title_article")
+
+            if len(text_article) == 0:
+                errors.append("Заполните текст")
+                return render_template("new_article.html", errors=errors)
+
+            conn = dbConnect()
+            cur = conn.cursor()
+
+            cur.execute("INSERT INTO articles(user_id, title, article_text) VALUES (%s, %s, %s) RETURNING id", (userID, title, text_article))
+
+            new_article_id = cur.fetchone()[0]
+            conn.commit()
+
+            dbClose(cur, conn)
+
+            return redirect(f"/lab5/articles/{new_article_id}")
+
+    return redirect("/lab5/login")
+
+
+@lab5.route("/lab5/articles/<int:article_id>")
+def getArticle(article_id):
+    userID = session.get("id")
+
+    if userID is not None:
+        conn = dbConnect()
+        cur = conn.cursor()
+
+        cur.execute("SELECT title, article_text FROM articles WHERE id = %s and user_id = %s", (article_id, userID))
+
+        articleBody = cur.fetchone()
+
+        dbClose(cur, conn)
+
+        if articleBody is None:
+            return "Not found!"
+
+        text = articleBody[1].splitlines()
+
+        return render_template("articleN.html", article_text=text, article_title=articleBody[0], username=session.get("username"))
