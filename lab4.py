@@ -53,26 +53,27 @@ def grain():
     selected_option = request.form.get('grain')
     zerno = ''
     weight = request.form.get('weight')
-    if weight:
-        weight = int(weight)
+    if not weight:
+        errors['weight1'] = 'не введен вес'
+    else:
+        if weight:
+            weight = int(weight)
         if weight > 500:
             errors['weight3'] = 'Такого объема сейчас нет в наличии'
-    if weight == '':
-        errors['weight1'] = 'не введен вес'
-    if weight <= 0:
-        errors['weight2'] = 'неверное значение веса'
-    if selected_option == 'ya':
-        total += 12500
-        zerno = 'ячмень'
-    if selected_option == 'ov':
-        total += 8500
-        zerno = 'овёс'
-    if selected_option == 'psh':
-        total += 8700
-        zerno = 'пшеница'
-    if selected_option == 'ro':
-        total += 14000
-        zerno = 'рожь'
+        if weight <= 0:
+            errors['weight2'] = 'неверное значение веса'
+        if selected_option == 'ya':
+            total += 12500
+            zerno = 'ячмень'
+        if selected_option == 'ov':
+            total += 8500
+            zerno = 'овёс'
+        if selected_option == 'psh':
+            total += 8700
+            zerno = 'пшеница'
+        if selected_option == 'ro':
+            total += 14000
+            zerno = 'рожь'
     total = total * weight
     if weight:
         if weight > 50:
