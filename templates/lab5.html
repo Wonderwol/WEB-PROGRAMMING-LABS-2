@@ -15,7 +15,7 @@
 
         button {
             border: 3px solid blueviolet;
-            border-radius: 14%;
+            border-radius: 15px;
             background-color: black;
             color: blueviolet;
         }
@@ -26,9 +26,13 @@
         <span style="font-size: 3vw;">База знаний</span>
         <a href="">Посмотреть заметки</a>
         <a href="">Создать заметку</a>
-        <button style="position: relative; left: 3vw;" href="">Логин</button>
-        <button style="color: white; background-color: blueviolet; left: 5vw; position: relative;" href="">Регистрация</button>
-        <span  style="right: -14vw; position: relative; color:green">{{ username }}</span>
+        <button style="position: relative; left: 3vw;" href="">
+            <a href="/lab5/login" target="_self">Логин</a>
+        </button>
+        <button style="color: white; background-color: blueviolet; left: 5vw; position: relative;" href="">
+            <a style="color: white" href="/lab5/register" target="_self">Регистрация</a>
+        </button>
+        <span  style="right: -7vw; position: relative; color:green">{{ username }}</span>
 
     </header>
     

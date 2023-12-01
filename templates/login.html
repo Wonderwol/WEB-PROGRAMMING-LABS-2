@@ -9,12 +9,13 @@
         <div>
             <label for="username">Пользователь:</label>
             <input type="text" id="username" name="username" value="{{ username }}">
-            <span class='error'>{{ errors.username }}</span> 
+            {% if not (username or password) and request.method == 'POST' %}
+            <span class='error' style="top: 1.4vw;">{{ errors[0] }}</span> 
+            {% endif %}
         </div>
         <div>
             <label for="password">Пароль:</label>
             <input type="password" id="password" name="password" value="{{ password }}">
-            <span class='error'>{{ errors.password }}</span> 
         </div>
         <div>
             <button type="submit">Войти</button>
