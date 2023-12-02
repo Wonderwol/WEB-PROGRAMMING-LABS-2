@@ -145,6 +145,7 @@ def createArticle():
             text_article = request.form.get("text_article")
             title = request.form.get("title_article")
 
+
             if len(text_article) == 0:
                 errors.append("Заполните текст")
                 return render_template("new_article.html", errors=errors)
@@ -152,7 +153,7 @@ def createArticle():
             conn = dbConnect()
             cur = conn.cursor()
 
-            cur.execute("INSERT INTO articles(user_id, title, article_text) VALUES (%s, %s, %s) RETURNING id", (userID, title, text_article))
+            cur.execute("INSERT INTO articles(user_id, title, article_text, is_public) VALUES (%s, %s, %s, %s) RETURNING id", (userID, title, text_article, True))
 
             new_article_id = cur.fetchone()[0]
             conn.commit()
@@ -167,6 +168,8 @@ def createArticle():
 @lab5.route("/lab5/articles/<int:article_id>")
 def getArticle(article_id):
     userID = session.get("id")
+
+
 
     if userID is not None:
         conn = dbConnect()
@@ -202,7 +205,41 @@ def getTitles():
         return render_template("articles_titles.html",  article_titles=articles, username=session.get("username"))
 
 
-@lab5.route("/lab5/logout")
+@lab5.route("/lab5/logout/")
 def logout():
     session.clear()
     return redirect(url_for("lab5.main"))
+
+@lab5.route("/lab5/allArticles/<int:article_id>")
+def allArticles(article_id):
+    user_id = session.get("id")
+    if user_id is not None:
+        conn = dbConnect()
+        cur = conn.cursor()
+
+        cur.execute("SELECT title, article_text FROM articles WHERE id = %s", (article_id,))
+        article_body = cur.fetchone()
+
+        dbClose(cur, conn)
+
+        if article_body is None:
+            return "Not found!"
+
+        text = article_body[1].splitlines()
+
+        return render_template("articleN.html", article_text=text, article_title=article_body[0], username=session.get("username"))
+
+
+
+@lab5.route("/lab5/all_articles/")
+def is_published():
+    conn = dbConnect()
+    cur = conn.cursor()
+    cur.execute("SELECT title, id FROM articles WHERE is_public = True")
+    public = cur.fetchall()
+
+    dbClose(cur, conn)
+    if not public:
+        return "Not found!"
+
+    return render_template("all_articles.html", public=public)
