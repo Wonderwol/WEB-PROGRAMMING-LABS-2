@@ -210,6 +210,8 @@ def logout():
     session.clear()
     return redirect(url_for("lab5.main"))
 
+     
+
 @lab5.route("/lab5/allArticles/<int:article_id>")
 def allArticles(article_id):
     user_id = session.get("id")
@@ -243,3 +245,38 @@ def is_published():
         return "Not found!"
 
     return render_template("all_articles.html", public=public)
+
+
+@lab5.route("/lab5/favorite/<int:article_id>", methods=["POST"])
+def add_to_favorite(article_id):
+    user_id = session.get("id")
+
+    if user_id is not None:
+        conn = dbConnect()
+        cur = conn.cursor()
+
+        # Устанавливаем is_favorite в TRUE для выбранной статьи и пользователя
+        cur.execute("UPDATE articles SET is_favorite = TRUE WHERE id = %s", (article_id))
+        conn.commit()
+
+        dbClose(cur, conn)
+
+        return redirect(url_for("lab5.all_articles"))
+
+
+# Отображение избранных статей
+@lab5.route("/lab5/favorites")
+def show_favorites():
+    user_id = session.get("id")
+
+    if user_id is not None:
+        conn = dbConnect()
+        cur = conn.cursor()
+
+        # Выбираем избранные статьи пользователя
+        cur.execute("SELECT title, id FROM articles WHERE is_favorite = TRUE AND user_id = %s", (user_id,))
+        favorites = cur.fetchall()
+
+        dbClose(cur, conn)
+
+        return render_template("favorites.html", favorites=favorites)

@@ -12,16 +12,12 @@
     </header>
 
 <main>
+    <h2>Избранные статьи</h2>
     <div>
         <ul>
-        {% for titles, title_number in public %}
-            <li>
-                <a href="/lab5/allArticles/{{ title_number }}">{{ titles }} </a>
-                <form method="post" action="/lab5/favorites" style="display:inline;">
-                    <input type="submit" value="Добавить в избранное">
-                </form>
-            </li>
-        {% endfor %}
+            {% for title, article_id in favorites %}
+                <li><a href="/lab5/articles/{{ article_id }}">{{ title }}</a></li>
+            {% endfor %}
         </ul>
     </div>
     
