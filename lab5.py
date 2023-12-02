@@ -1,5 +1,5 @@
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask import Blueprint, render_template, request, redirect, session
+from flask import Blueprint, render_template, request, redirect, session, url_for
 import psycopg2
 
 
@@ -80,7 +80,7 @@ def registerPage():
 
         return render_template('register.html', errors=errors, resultСur=resultСur)
 
-    cur.execute(f"CREATE USER {username} WITH PASSWORD '{hashPassword}';") # Не удается убрать инъекцию
+    cur.execute(f"CREATE USER {username} WITH PASSWORD '{hashPassword}';")  # Не удается убрать инъекцию
     cur.execute("GRANT USAGE, SELECT ON SEQUENCE articles_id_seq TO %s;" % (username))
     cur.execute("GRANT ALL PRIVILEGES ON TABLE articles TO %s;" % (username,))
     cur.execute("INSERT INTO users (username, password) VALUES (%s, %s);", (username, hashPassword))
@@ -184,3 +184,25 @@ def getArticle(article_id):
         text = articleBody[1].splitlines()
 
         return render_template("articleN.html", article_text=text, article_title=articleBody[0], username=session.get("username"))
+
+
+@lab5.route("/lab5/articles_titles")
+def getTitles():
+    userID = session.get("id")
+    if userID is not None:
+        conn = dbConnect()
+        cur = conn.cursor()
+
+        cur.execute(f"SELECT title, id FROM articles WHERE user_id = {userID}")
+
+        articles = cur.fetchall()
+        dbClose(cur, conn)
+        if not articles:
+            return "Not found!"
+        return render_template("articles_titles.html",  article_titles=articles, username=session.get("username"))
+
+
+@lab5.route("/lab5/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("lab5.main"))
