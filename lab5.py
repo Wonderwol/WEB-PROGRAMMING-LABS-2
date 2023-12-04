@@ -33,6 +33,7 @@ def main():
     cur.execute("SELECT * FROM users;")
 
     result = cur.fetchall()
+
     global global_result
     global_result = result
 
@@ -81,9 +82,9 @@ def registerPage():
         return render_template('register.html', errors=errors, resultСur=resultСur)
 
     cur.execute(f"CREATE USER {username} WITH PASSWORD '{hashPassword}';")  # Не удается убрать инъекцию
+    cur.execute("INSERT INTO users (username, password) VALUES (%s, %s);", (username, hashPassword))
     cur.execute("GRANT USAGE, SELECT ON SEQUENCE articles_id_seq TO %s;" % (username))
     cur.execute("GRANT ALL PRIVILEGES ON TABLE articles TO %s;" % (username,))
-    cur.execute("INSERT INTO users (username, password) VALUES (%s, %s);", (username, hashPassword))
 
     conn.commit()
     dbClose(cur, conn)
@@ -145,7 +146,6 @@ def createArticle():
             text_article = request.form.get("text_article")
             title = request.form.get("title_article")
 
-
             if len(text_article) == 0:
                 errors.append("Заполните текст")
                 return render_template("new_article.html", errors=errors)
@@ -168,8 +168,6 @@ def createArticle():
 @lab5.route("/lab5/articles/<int:article_id>")
 def getArticle(article_id):
     userID = session.get("id")
-
-
 
     if userID is not None:
         conn = dbConnect()
@@ -210,7 +208,6 @@ def logout():
     session.clear()
     return redirect(url_for("lab5.main"))
 
-     
 
 @lab5.route("/lab5/allArticles/<int:article_id>")
 def allArticles(article_id):
@@ -230,7 +227,6 @@ def allArticles(article_id):
         text = article_body[1].splitlines()
 
         return render_template("articleN.html", article_text=text, article_title=article_body[0], username=session.get("username"))
-
 
 
 @lab5.route("/lab5/all_articles/")
