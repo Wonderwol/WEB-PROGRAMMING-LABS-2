@@ -145,17 +145,20 @@ def createArticle():
         if request.method == "POST":
             text_article = request.form.get("text_article")
             title = request.form.get("title_article")
+            len_article = len(text_article)
 
             if len(text_article) == 0:
                 errors.append("Заполните текст")
-                return render_template("new_article.html", errors=errors)
+                return render_template("new_article.html", errors=errors, len=len_article)
 
             conn = dbConnect()
             cur = conn.cursor()
 
-            cur.execute("INSERT INTO articles(user_id, title, article_text, is_public) VALUES (%s, %s, %s, %s) RETURNING id", (userID, title, text_article, True))
+            cur.execute("INSERT INTO articles(user_id, title, article_text, is_public) VALUES (%s, %s, %s, %s) RETURNING id", (userID, title, text_article, False))
 
             new_article_id = cur.fetchone()[0]
+            session['article_id'] = new_article_id
+
             conn.commit()
 
             dbClose(cur, conn)
@@ -165,6 +168,7 @@ def createArticle():
     return redirect("/lab5/login")
 
 
+# Here
 @lab5.route("/lab5/articles/<int:article_id>")
 def getArticle(article_id):
     userID = session.get("id")
@@ -187,6 +191,7 @@ def getArticle(article_id):
         return render_template("articleN.html", article_text=text, article_title=articleBody[0], username=session.get("username"))
 
 
+# Или тут
 @lab5.route("/lab5/articles_titles")
 def getTitles():
     userID = session.get("id")
@@ -201,6 +206,8 @@ def getTitles():
         if not articles:
             return "Not found!"
         return render_template("articles_titles.html",  article_titles=articles, username=session.get("username"))
+    else:
+        return "Войдите в аккаунт!!!"
 
 
 @lab5.route("/lab5/logout/")
@@ -209,14 +216,24 @@ def logout():
     return redirect(url_for("lab5.main"))
 
 
-@lab5.route("/lab5/allArticles/<int:article_id>")
+# ТУТ
+@lab5.route("/lab5/allArticles/<int:article_id>", methods=['GET', 'POST'])
 def allArticles(article_id):
     user_id = session.get("id")
+    article_id = session['article_id']
+
     if user_id is not None:
         conn = dbConnect()
         cur = conn.cursor()
 
-        cur.execute("SELECT title, article_text FROM articles WHERE id = %s", (article_id,))
+        if request.method == 'POST':
+            is_public = request.form.get('button_data')
+
+            if is_public == 'True':
+                cur.execute("UPDATE articles SET is_public = true WHERE id = %s;", (str(article_id),))
+                conn.commit()  # Сделай коммит изменений в базе данных
+
+        cur.execute("SELECT title, article_text FROM articles WHERE id = %s and is_public = True", (str(article_id),))
         article_body = cur.fetchone()
 
         dbClose(cur, conn)
@@ -226,14 +243,16 @@ def allArticles(article_id):
 
         text = article_body[1].splitlines()
 
-        return render_template("articleN.html", article_text=text, article_title=article_body[0], username=session.get("username"))
+        return render_template("articleN.html", article_text=text, article_title=article_body[0], username=session.get("username"), article_id=article_id)
 
 
-@lab5.route("/lab5/all_articles/")
+@lab5.route("/lab5/all_articles/", methods=['GET', 'POST'])  # тут
 def is_published():
     conn = dbConnect()
     cur = conn.cursor()
+
     cur.execute("SELECT title, id FROM articles WHERE is_public = True")
+
     public = cur.fetchall()
 
     dbClose(cur, conn)
