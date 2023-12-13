@@ -45,7 +45,6 @@ def main():
 @lab5.route('/lab5/users')
 def users():
     global global_result
-
     len_res = len(global_result)
     return render_template('users.html', result=global_result, len_res=len_res)
 

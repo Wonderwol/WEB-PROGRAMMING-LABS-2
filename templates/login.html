@@ -9,9 +9,7 @@
         <div>
             <label for="username">Пользователь:</label>
             <input type="text" id="username" name="username" value="{{ username }}">
-            {% if not (username or password) and request.method == 'POST' %}
             <span class='error' style="top: 1.4vw;">{{ errors[0] }}</span> 
-            {% endif %}
         </div>
         <div>
             <label for="password">Пароль:</label>
