@@ -9,7 +9,7 @@ def main():
     return render_template('lab7/index.html')
 
 
-@lab7.route('/lab7/drink', methods=['GET', 'POST'])
+@lab7.route('/lab7/drink', methods=['GET'])
 def drink():
     return render_template('lab7/drink.html')
 
@@ -23,6 +23,9 @@ def api():
 
     if data['method'] == 'pay':
         return pay(data['params'])
+
+    if data['method'] == 'refund':
+        return refund(data['params'])
 
     abort(400)
 
@@ -62,3 +65,9 @@ def pay(params):
 
     price = calculate_price(params)
     return {"result": f'С карты {card_num} списано {price} руб', "error": None}
+
+
+def refund(params):
+    card_num = params['card_num']
+    price = calculate_price(params)
+    return {"result": f'На карту {card_num} возвращено {price} руб'}

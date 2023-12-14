@@ -59,11 +59,20 @@
             </label>
 
             <div>
-                <button onclick="pay()" type="button">Оплатить</button>
+                <button onclick="pay()" type="button">Оплатить</button>  
             </div>
 
             <div id="error_message"></div>
         </div>
+
+        <div id="lol"></div>
+        <div id="pay_back" style="display: none">
+        <button onclick="refund()" type="button">Отмена оплаты</button> 
+        <button style=" display: none;" id="">
+            <a href="/lab7/drink" style="text-decoration: none;" id="back">Сделать новый заказ</a>
+        </button>
+        </div>
+     
     <br>
     <br>
     <br>
