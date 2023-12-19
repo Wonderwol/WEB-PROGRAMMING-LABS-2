@@ -26,7 +26,28 @@
     </script>
 
     <div>
-        <button>Добавить курс</button>
+        <button onclick="addCourse()">Добавить курс</button>
+    </div>
+
+    <div class="modal">
+        <input type="hidden" id="num">
+        <label>
+            Название курса:
+            <input type="text" id="name">
+        </label><br>
+
+        <label>
+            Количество видеороликов:
+            <input type="number" id="videos" min="0">
+        </label><br>
+
+        <label>
+            Цена:
+            <input type="number" id="price" min="0">
+        </label><br>
+
+        <button onclick="sendCourse()">OK</button>
+        <button onclick="cancel()">Отмена</button>
     </div>
     <br>
     <br>
