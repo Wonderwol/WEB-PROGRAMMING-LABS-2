@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block lab %}Ошибка 404{% endblock %}
+
+{% block main %}
+    <h1>Такой страницы не существует</h1>
+    <img style="left: 17vw; height: 29vw;" src={{ url_for('static', filename='moroz.jpg')}}>
+    <br>
+    <br>
+{% endblock %}
