@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block lab %}Открытка{% endblock %}
+
+{% block main %}
+
+<form method="post">
+    <br>
+    <br>
+    <div>
+        <label for="username">Имя получателя:</label>
+        <input type="text" id="username" name="username" value="{{ username }}">
+    </div>
+    <div>
+        <label>
+            <input type="radio" value="м" name="sex" checked>м
+        </label>
+
+        <label>
+            <input type="radio" value="ж" name="sex" checked>ж
+        </label>
+
+        <label for="username">Имя отправителя:</label>
+        <input type="text" id="username2" name="username2" value="{{ username2 }}">
+    </div>
+    <div>
+        <button type="submit">Сделать открытку</button>
+    </div>
+    <br>
+    <br>
+
+    <div>{{ wish }}</div>
+    <br>
+    <br>
+</form>
+
+{% endblock %}

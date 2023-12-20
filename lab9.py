@@ -22,3 +22,17 @@ def error500(err):
 def error():
     result = 1 / 0
     return result
+
+@lab9.route('/lab9/wishes', methods=['GET', 'POST'])
+def wish():
+    wish = ""
+    username = request.form.get('username')
+    username2 = request.form.get('username2')
+    sex = request.form.get('sex')
+
+    if username and username2 and sex == 'м':
+        wish = f'Желаю, чтобы {username2} был здоровым и счастливым в новом году!!! P. S. {username}'
+
+    if username and username2 and sex == 'ж':
+        wish = f'Желаю, чтобы {username2} была здоровой и счастливой в новом году!!! P. S. {username}'
+    return render_template('wish.html', wish=wish)
