@@ -17,6 +17,9 @@ function fillCourseList() {
             let tdPrice = document.createElement('td');
             tdPrice.innerText = courses[i].price || 'бесплатно';
 
+            let tdDate = document.createElement('td');
+            tdDate.innerText = courses[i].date;
+
             let editButton = document.createElement('button')
             editButton.innerText = 'редактировать';
             editButton.onclick = function() {
@@ -36,6 +39,7 @@ function fillCourseList() {
             tr.append(tdName);
             tr.append(tdVideos);
             tr.append(tdPrice);
+            tr.append(tdDate)
             tr.append(tdActions);
 
             tbody.append(tr);
@@ -68,6 +72,7 @@ function addCourse() {
     document.getElementById('name').value = '';
     document.getElementById('videos').value = '';
     document.getElementById('price').value = '';
+    document.getElementById('current-time').value = '';
     showModal();
 }
 
@@ -76,7 +81,8 @@ function sendCourse() {
     const course = {
         name: document.getElementById('name').value,
         videos: document.getElementById('videos').value,
-        price: document.getElementById('price').value
+        price: document.getElementById('price').value,
+        date: document.getElementById('current-time').value,
     }
 
     const url = `/lab8/api/courses/${num}`;
@@ -97,5 +103,6 @@ function editCourse(num, course) {
     document.getElementById('name').value = course.name;
     document.getElementById('videos').value = course.videos;
     document.getElementById('price').value = course.price;
+    document.getElementById('current-time').value = course.date;
     showModal();
 }
